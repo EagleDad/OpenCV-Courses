@@ -1,0 +1,168 @@
+######################################################################
+#
+# add_csharp_executable
+function(add_csharp_executable)
+
+    cmake_parse_arguments(
+        pargs 
+        "CONSOLE"
+        "TARGET"
+        "SOURCES;CONFIGURATION;PROPERTIES;RESOURCES;DOT_NET_REFERENCES;FILES"
+        ${ARGN}
+    )
+    
+    if(pargs_UNPARSED_ARGUMENTS)
+        message(FATAL_ERROR "Unknown arguments: ${pargs_UNPARSED_ARGUMENTS}")
+    endif()
+    
+    if( "TARGET" IN_LIST pargs_KEYWORDS_MISSING_VALUES)
+        message(FATAL_ERROR "TARGET: not defined!")
+    endif()
+    
+    source_group("Source Files"
+        FILES
+            ${pargs_SOURCES}
+    )
+    
+    source_group("Resource Files"
+        FILES
+            ${pargs_RESOURCES}
+    )
+    
+    add_executable(${pargs_TARGET}
+        ${pargs_CONFIGURATION}
+        ${pargs_SOURCES}
+        ${pargs_PROPERTIES}
+        ${pargs_RESOURCES}
+        ${pargs_FILES}
+    )
+
+    if ( ${pargs_CONSOLE})
+        set(pargs_CONSOLE FALSE)
+    else()
+        set(pargs_CONSOLE TRUE)
+    endif()
+    
+    set_property(
+        TARGET
+            ${pargs_TARGET}
+        
+        PROPERTY
+            WIN32_EXECUTABLE ${pargs_CONSOLE}
+    )
+    
+    set_property(
+        TARGET
+            ${pargs_TARGET}
+        
+        PROPERTY
+            VS_DOTNET_TARGET_FRAMEWORK_VERSION "${DOT_NET_VERSION}"
+    )
+    
+    set_property(
+        TARGET
+            ${pargs_TARGET} 
+            
+        PROPERTY VS_DOTNET_REFERENCES
+            ${pargs_DOT_NET_REFERENCES}
+    )
+    
+    set_property(
+        SOURCE 
+            ${pargs_RESOURCES}
+            
+        PROPERTY VS_TOOL_OVERRIDE
+            "Resource"
+    )
+    
+    set_property(
+        SOURCE 
+            ${pargs_FILES}
+            
+        PROPERTY VS_TOOL_OVERRIDE
+            "Resource"
+    )
+    
+    set_property(
+        SOURCE
+            ${pargs_FILES}
+        PROPERTY HEADER_FILE_ONLY
+          TRUE # Since it's just a text file, it doesn't need compiled
+    )
+
+endfunction(add_csharp_executable)
+######################################################################
+
+######################################################################
+#
+# add_csharp_library
+function(add_csharp_library)
+
+    cmake_parse_arguments(
+        pargs 
+        ""
+        "TARGET"
+        "SOURCES;CONFIGURATION;PROPERTIES;RESOURCES;DOT_NET_REFERENCES;FILES"
+        ${ARGN}
+    )
+    
+    if(pargs_UNPARSED_ARGUMENTS)
+        message(FATAL_ERROR "Unknown arguments: ${pargs_UNPARSED_ARGUMENTS}")
+    endif()
+    
+    if( "TARGET" IN_LIST pargs_KEYWORDS_MISSING_VALUES)
+        message(FATAL_ERROR "TARGET: not defined!")
+    endif()
+    
+    source_group("Source Files"
+        FILES
+            ${pargs_SOURCES}
+    )
+    
+    source_group("Resource Files"
+        FILES
+            ${pargs_RESOURCES}
+    )
+    
+    add_library(${pargs_TARGET}
+        ${pargs_CONFIGURATION}
+        ${pargs_SOURCES}
+        ${pargs_PROPERTIES}
+        ${pargs_RESOURCES}
+        ${pargs_FILES}
+    )
+    
+    set_property(
+        TARGET
+            ${pargs_TARGET}
+        
+        PROPERTY
+            WIN32_EXECUTABLE FALSE
+    )
+    
+    set_property(
+        TARGET
+            ${pargs_TARGET}
+        
+        PROPERTY
+            VS_DOTNET_TARGET_FRAMEWORK_VERSION "${DOT_NET_VERSION}"
+    )
+    
+    set_property(
+        TARGET
+            ${pargs_TARGET} 
+            
+        PROPERTY VS_DOTNET_REFERENCES
+            ${pargs_DOT_NET_REFERENCES}
+    )
+    
+    set_property(
+        SOURCE 
+            ${pargs_RESOURCES}
+            
+        PROPERTY VS_TOOL_OVERRIDE
+            "Resource"
+    )
+
+endfunction(add_csharp_library)
+######################################################################

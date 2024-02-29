@@ -1,0 +1,33 @@
+set( VERSION "v1.14.0")
+set( PROJECT_NAME "googletest")
+
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+ExternalProject_Add(
+    ${PROJECT_NAME}
+    PREFIX ${FETCHCONTENT_BASE_DIR}/${PROJECT_NAME}
+    GIT_REPOSITORY      https://github.com/google/googletest.git
+    GIT_TAG             ${VERSION}
+    SOURCE_DIR "${FETCHCONTENT_BASE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}-${VERSION}/src"
+    BINARY_DIR "${FETCHCONTENT_BASE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}-${VERSION}/build"
+    INSTALL_DIR "${FETCHCONTENT_BASE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}-${VERSION}/install"
+    CMAKE_ARGS
+    -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
+    #-DCMAKE_BUILD_TYPE=Release
+	-DCMAKE_DEBUG_POSTFIX=-d
+    -Dgtest_force_shared_crt=ON
+)
+
+list(APPEND DEPENDENCIES ${PROJECT_NAME})
+
+set(GTest_DIR "${FETCHCONTENT_BASE_DIR}/${PROJECT_NAME}/${PROJECT_NAME}-${VERSION}/install/lib/cmake/GTest")
+
+list(APPEND EXTRA_CMAKE_ARGS
+    -DGTest_DIR:PATH=${GTest_DIR}
+)
+
+
+
+
+
+
