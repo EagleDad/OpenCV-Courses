@@ -51,6 +51,8 @@ REM copy %PROJECT_ROOT%\.conan\debug_ipt %USERPROFILE%\.conan\debug_ocv
 
 REM copy %PROJECT_ROOT%\.conan\release_ipt %USERPROFILE%\.conan\release_ocv
 
+CALL conan profile detect --force
+
 CALL conan install %PROJECT_ROOT%\.conan --output-folder=%PROJECT_ROOT%\%BUILD_DIR% --build=missing --profile=%PROJECT_ROOT%\.conan\debug_ocv
 
 CALL conan install %PROJECT_ROOT%\.conan --output-folder=%PROJECT_ROOT%\%BUILD_DIR% --build=missing --profile=%PROJECT_ROOT%\.conan\release_ocv
