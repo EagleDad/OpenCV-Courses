@@ -1,1 +1,2 @@
-add_subdirectory( imageAsAMatrix )
+add_subdirectory( basicImageOperations )
+add_subdirectory( gettingStarted )

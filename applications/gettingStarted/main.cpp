@@ -1,4 +1,5 @@
-#include "macros.h"
+#include <GUI.h>
+#include <macros.h>
 
 // OpenCV includes
 IGNORE_WARNINGS_OPENCV_PUSH
@@ -49,20 +50,6 @@ std::string type2str( int type )
     r += ( chans + '0' ); // NOLINT(bugprone-narrowing-conversions)
 
     return r;
-}
-
-void showMat( const cv::Mat& imageIn, const std::string& szName,
-              bool bWait = false, double scale = 1 )
-{
-    cv::namedWindow( szName, cv::WINDOW_NORMAL );
-
-    cv::imshow( szName, imageIn );
-
-    cv::resizeWindow( szName,
-                      static_cast< int >( imageIn.cols * scale ),
-                      static_cast< int >( imageIn.rows * scale ) );
-
-    cv::waitKey( bWait ? 0 : 100 );
 }
 
 int main( [[maybe_unused]] int argc, [[maybe_unused]] char** argv )

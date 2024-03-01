@@ -1,5 +1,5 @@
 # Don't use PROJECT_NAME as target name, it's too tight of a relationship
-set(EXECUTABLE_NAME "imageAsAMatrix")
+set(EXECUTABLE_NAME "basicImageOperations")
 
 find_package( OpenCV REQUIRED )
 
@@ -7,7 +7,6 @@ include_directories( ${OpenCV_INCLUDE_DIRS} )
 
 add_executable(${EXECUTABLE_NAME}
     main.cpp
-	macros.h
 )
 
 set_compiler_warning_flags( 
@@ -33,6 +32,7 @@ copy_runtime_dependencies(
 target_link_libraries(${EXECUTABLE_NAME}
     PUBLIC
         ${OpenCV_LIBS}
+        cvHelper
 
     PRIVATE
 

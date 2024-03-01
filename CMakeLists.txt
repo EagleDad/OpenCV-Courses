@@ -113,7 +113,7 @@ message(STATUS "Distributen Name: ${PRETTY_NAME}")
 
 # Let CMake load the CMakeLists.txt in the subdirectory to load the
 # sub-projects. Prefer lower-case names.
-#add_subdirectory(libraries)
+add_subdirectory(libraries)
 add_subdirectory(applications)
 
 message(STATUS "Version: ${PROJECT_VERSION_FULL}")
