@@ -1,3 +1,4 @@
+add_subdirectory( annotateImages )
 add_subdirectory( basicImageOperations )
 add_subdirectory( bitwiseOperations )
 add_subdirectory( gettingStarted )
