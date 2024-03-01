@@ -231,7 +231,7 @@ int main( [[maybe_unused]] int argc, [[maybe_unused]] char** argv )
     cv::Point lineRight( xcoordinate + textWidth, ycoordinate );
     cv::Scalar lineColor = cv::Scalar( 0, 255, 0 );
 
-    line( imageGetTextSize,
+    cv::line( imageGetTextSize,
           lineLeft,
           lineRight,
           lineColor,
@@ -239,7 +239,7 @@ int main( [[maybe_unused]] int argc, [[maybe_unused]] char** argv )
           cv::LINE_AA );
 
     // Finally Draw the text
-    putText( imageGetTextSize,
+    cv::putText( imageGetTextSize,
              "I am studying",
              cv::Point( xcoordinate, ycoordinate ),
              fontFace,
