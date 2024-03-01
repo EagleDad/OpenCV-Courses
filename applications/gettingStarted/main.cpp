@@ -11,6 +11,9 @@ IGNORE_WARNINGS_POP
 // STD includes
 #include <iostream>
 
+const std::string IMAGES_ROOT = "C:/images";
+const std::string RESULTS_ROOT = "C:/images/results";
+
 std::string type2str( int type )
 {
     std::string r;
@@ -47,7 +50,7 @@ std::string type2str( int type )
     }
 
     r += "C";
-    r += ( chans + '0' ); // NOLINT(bugprone-narrowing-conversions)
+    r += chans + '0'; // NOLINT(bugprone-narrowing-conversions)
 
     return r;
 }
@@ -55,7 +58,7 @@ std::string type2str( int type )
 int main( [[maybe_unused]] int argc, [[maybe_unused]] char** argv )
 {
     // Matrix as an Image
-    const std::string imagePath = "../../../images/number_zero.jpg";
+    const std::string imagePath = IMAGES_ROOT + "/number_zero.jpg";
 
     // Read image in Grayscale format
     cv::Mat testImage = cv::imread( imagePath, 0 );
@@ -92,10 +95,10 @@ int main( [[maybe_unused]] int argc, [[maybe_unused]] char** argv )
     // See showMat function
 
     // Saving an image
-    cv::imwrite( "c:/tmp/test.jpg", testImage );
+    cv::imwrite( RESULTS_ROOT + "/test.jpg", testImage );
 
     // Color images
-    const std::string colImagePath = "../../../images/musk.jpg";
+    const std::string colImagePath = IMAGES_ROOT + "/musk.jpg";
 
     // Read the image
     cv::Mat img = cv::imread( colImagePath );
@@ -105,7 +108,7 @@ int main( [[maybe_unused]] int argc, [[maybe_unused]] char** argv )
 
     // Splitting and merging channels
     cv::Mat imgChannels[ 3 ];
-    split( img, imgChannels );
+    cv::split( img, imgChannels );
 
     showMat( imgChannels[ 0 ], "Channel 0", false, 1 );
     showMat( imgChannels[ 1 ], "Channel 1", false, 1 );
@@ -138,7 +141,7 @@ int main( [[maybe_unused]] int argc, [[maybe_unused]] char** argv )
     showMat( colTestImageZero, "Color Test Image ROI Mod", true, 5 );
 
     // Images with alpha
-    const std::string pantImagePath = "../../../images/panther.png";
+    const std::string pantImagePath = IMAGES_ROOT + "/panther.png";
 
     // Read the image
     // Note that we are passing flag = -1 while reading the image ( it will read
