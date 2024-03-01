@@ -33,31 +33,31 @@ int main( [[maybe_unused]] int argc, [[maybe_unused]] char** argv )
 
     // Cropping an image
     // Read image
-    cv::Mat imageBoy = cv::imread( IMAGES_ROOT + "/boy.png" );
+    cv::Mat imageBoy = cv::imread( IMAGES_ROOT + "/boy.jpg" );
     showMat( imageBoy, "Boy", false );
 
     // Crop out a rectangle
-    // x coordinates = 250 to 400
-    // y coordinates = 80 to 240
-    cv::Mat crop = imageBoy( cv::Range( 80, 240 ), cv::Range( 250, 400 ) );
-    showMat( crop, "Boy", true );
+    // x coordinates = 170 to 300
+    // y coordinates = 40 to 200
+    cv::Mat crop = imageBoy( cv::Range( 40, 200 ), cv::Range( 170, 320 ) );
+    showMat( crop, "Boy cropped", true );
 
     // Copying a region to another
     // First let us create a copy of the original image
     cv::Mat copiedImage = imageBoy.clone( );
 
-    cv::Mat copyRoi = imageBoy( cv::Range( 80, 240 ), cv::Range( 250, 400 ) );
+    cv::Mat copyRoi = imageBoy( cv::Range( 40, 200 ), cv::Range( 170, 320 ) );
 
     // Find height and width of the ROI
     int roiHeight = copyRoi.size( ).height;
     int roiWidth = copyRoi.size( ).width;
 
     // Copy to left of Face
-    copyRoi.copyTo( copiedImage( cv::Range( 80, 80 + roiHeight ),
-                                 cv::Range( 80, 80 + roiWidth ) ) );
+    copyRoi.copyTo( copiedImage( cv::Range( 40, 40 + roiHeight ),
+                                 cv::Range( 10, 10 + roiWidth ) ) );
     // Copy to right of Face
-    copyRoi.copyTo( copiedImage( cv::Range( 80, 80 + roiHeight ),
-                                 cv::Range( 400, 400 + roiWidth ) ) );
+    copyRoi.copyTo( copiedImage( cv::Range( 40, 40 + roiHeight ),
+                                 cv::Range( 330, 330 + roiWidth ) ) );
 
     showMat( copiedImage, "Boy copied", true );
 
