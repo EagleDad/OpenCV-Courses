@@ -1,5 +1,5 @@
 # Don't use PROJECT_NAME as target name, it's too tight of a relationship
-set(EXECUTABLE_NAME "usingMouseForAnnotation")
+set(EXECUTABLE_NAME "usingKeyboardAsInput")
 
 find_package( OpenCV REQUIRED )
 
