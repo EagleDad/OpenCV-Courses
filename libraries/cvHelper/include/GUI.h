@@ -12,4 +12,4 @@ class Mat;
 
 CVHELPER_EXPORT
 void showMat( const cv::Mat& imageIn, const std::string& szName,
-              bool bWait = false, double scale = 1 );
+              bool bWait = false, double scale = 1, int32_t waitTime = 25 );
