@@ -1,6 +1,7 @@
 add_subdirectory( annotateImages )
 add_subdirectory( basicImageOperations )
 add_subdirectory( bitwiseOperations )
+add_subdirectory( erosionDilation )
 add_subdirectory( gettingStarted )
 add_subdirectory( mathematicalOperations )
 add_subdirectory( qrCodeDetector )
