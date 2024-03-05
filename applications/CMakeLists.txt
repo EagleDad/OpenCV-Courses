@@ -1,5 +1,6 @@
 add_subdirectory( annotateImages )
 add_subdirectory( basicImageOperations )
+add_subdirectory( connectedComponentAnalysis )
 add_subdirectory( bitwiseOperations )
 add_subdirectory( erosionDilation )
 add_subdirectory( gettingStarted )
