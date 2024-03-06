@@ -191,10 +191,10 @@ int main( [[maybe_unused]] int argc, [[maybe_unused]] char** argv )
         cv::ellipse( image, rellipse, cv::Scalar( 255, 0, 125 ), 2 );
     }
 
-    showMat( image, "Image with contours fitted ellipse" );
+    showMat( image, "Image with contours fitted ellipse", true );
 
     // Clean up
-    system( "pause" ); // NOLINT(concurrency-mt-unsafe)
+    //system( "pause" ); // NOLINT(concurrency-mt-unsafe)
     cv::destroyAllWindows( );
 
     return 0;
