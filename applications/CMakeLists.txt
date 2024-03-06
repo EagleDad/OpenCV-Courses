@@ -1,5 +1,6 @@
 add_subdirectory( annotateImages )
 add_subdirectory( basicImageOperations )
+add_subdirectory( blobDetection )
 add_subdirectory( connectedComponentAnalysis )
 add_subdirectory( contours )
 add_subdirectory( bitwiseOperations )
