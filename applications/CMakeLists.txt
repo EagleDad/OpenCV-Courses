@@ -1,4 +1,5 @@
 add_subdirectory( annotateImages )
+add_subdirectory( autoFocusAssignment )
 add_subdirectory( basicImageOperations )
 add_subdirectory( blobDetection )
 add_subdirectory( cannyEdgeDetector )
