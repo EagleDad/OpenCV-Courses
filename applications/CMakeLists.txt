@@ -1,3 +1,4 @@
+add_subdirectory( adReplacement )
 add_subdirectory( annotateImages )
 add_subdirectory( Assignment2 )
 add_subdirectory( Assignment3 )
