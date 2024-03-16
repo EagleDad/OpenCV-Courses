@@ -49,7 +49,7 @@ int main( [[maybe_unused]] int argc, [[maybe_unused]] char** argv )
 
     orb->detectAndCompute( imgGray, cv::Mat( ), kp, des );
 
-    drawKeypoints( img,
+    cv::drawKeypoints( img,
                    kp,
                    img2,
                    cv::Scalar( 0, 0, 255 ),
