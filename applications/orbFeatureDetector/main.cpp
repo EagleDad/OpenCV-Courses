@@ -37,7 +37,7 @@ int main( [[maybe_unused]] int argc, [[maybe_unused]] char** argv )
 
     // draw only keypoints location,not size and orientation
     cv::Mat img2;
-    drawKeypoints( img,
+    cv::drawKeypoints( img,
                    kp,
                    img2,
                    cv::Scalar( 0, 255, 0 ),
