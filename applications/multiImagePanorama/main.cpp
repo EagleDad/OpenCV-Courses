@@ -5,7 +5,6 @@
 IGNORE_WARNINGS_OPENCV_PUSH
 #include <opencv2/core.hpp>
 #include <opencv2/opencv.hpp>
-// #include <opencv2/stitching.hpp>
 IGNORE_WARNINGS_POP
 
 // STD includes
@@ -61,7 +60,7 @@ int main( [[maybe_unused]] int argc, [[maybe_unused]] char** argv )
 
     // Store a new image stitched from the given
     // set of images as "result.jpg"
-    cv::imwrite( RESULTS_ROOT + "\result.jpg", imgPanorama );
+    cv::imwrite( RESULTS_ROOT + "/result.jpg", imgPanorama );
 
     showMat( imgPanorama, "Panorama", true );
 
