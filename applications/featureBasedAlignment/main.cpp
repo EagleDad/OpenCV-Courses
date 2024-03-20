@@ -52,7 +52,7 @@ int main( [[maybe_unused]] int argc, [[maybe_unused]] char** argv )
     /// YOUR CODE HERE
     ///
     int MAX_FEATURES = 5000;
-    float GOOD_MATCH_PERCENT = 0.02f;
+    float GOOD_MATCH_PERCENT = 0.15f;
 
     // Initiate ORB detector
     cv::Ptr< cv::ORB > orb = cv::ORB::create( MAX_FEATURES );
