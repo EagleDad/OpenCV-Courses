@@ -115,30 +115,43 @@ int main( [[maybe_unused]] int argc, [[maybe_unused]] char** argv )
         showMat( backProjectImage, "Back Projected Image", false );
 
         // Compute the new window using mean shift in the present frame
-        int ret = meanShift(
+        cv::RotatedRect rotatedWindow = CamShift(
             backProjectImage,
             currWindow,
             cv::TermCriteria(
                 cv::TermCriteria::EPS | cv::TermCriteria::COUNT, 10, 1 ) );
-        std::ignore = ret;
+
+        // Get the rotatedWindow vertices
+        cv::Point2f rotatedWindowVertices[ 4 ];
+        rotatedWindow.points( rotatedWindowVertices );
 
         // Display the frame with the tracked location of face
         frameClone = frame.clone( );
 
-        cv::rectangle( frameClone,
-                       cv::Point( currWindow.x, currWindow.y ),
-                       cv::Point( currWindow.x + currWindow.width,
-                                  currWindow.y + currWindow.height ),
-                       cv::Scalar( 255, 0, 0 ),
-                       2,
-                       cv::LINE_AA );
+        rectangle( frameClone,
+                   cv::Point( currWindow.x, currWindow.y ),
+                   cv::Point( currWindow.x + currWindow.width,
+                              currWindow.y + currWindow.height ),
+                   cv::Scalar( 255, 0, 0 ),
+                   2,
+                   cv::LINE_AA );
+        // Display the rotated rectangle with the orientation information
+        for ( int i = 0; i < 4; i++ )
+        {
+            line( frameClone,
+                  rotatedWindowVertices[ i ],
+                  rotatedWindowVertices[ ( i + 1 ) % 4 ],
+                  cv::Scalar( 0, 255, 0 ),
+                  2,
+                  cv::LINE_AA );
+        }
 
-        showMat( frameClone, "Mean Shift Object Tracking Demo", false, 1, 500 );
+        showMat( frameClone, "CAM Shift Object Tracking Demo", false, 1, 100 );
 
         count += 2;
         if ( count == 10 )
         {
-            break;
+           // break;
         }
     }
 
