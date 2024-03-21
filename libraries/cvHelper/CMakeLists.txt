@@ -1,4 +1,5 @@
 set( LIBRARY_NAME "cvHelper" )
+
 get_raw_target_name( ${LIBRARY_NAME} LIBRARY_NAME_RAW )
 
 find_package( OpenCV REQUIRED )

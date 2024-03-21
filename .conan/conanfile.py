@@ -12,6 +12,9 @@ class OpenCvCoursesRecipe(ConanFile):
         self.requires("opencv/4.8.1")
         self.requires("libpng/1.6.40", force=True)
 
+    def configure(self):
+        self.options["opencv/*"].tracking=True
+        
     def build_requirements(self):
         self.tool_requires("cmake/3.22.6")
         

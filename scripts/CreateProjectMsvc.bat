@@ -8,7 +8,7 @@ for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1)
 REM Default config
 SET VS_VERSION="Visual Studio 17 2022"
 SET CMAKE_FLAGS=
-SET BUILD_DIR=buildMsvc
+SET BUILD_DIR=build
 
 CALL InitializeVariables.bat
 
@@ -25,7 +25,7 @@ IF NOT "%1"=="" (
 		SET CMAKE_FLAGS=%CMAKE_FLAGS% -D BUILD_WITH_BENCHMARK=ON
     )
     IF "%1"=="-dir" (
-        SET BUILD_DIR=%2
+        REM SET BUILD_DIR=%2
         ECHO Build directory is set to %2%
 		SHIFT
     )
@@ -53,16 +53,16 @@ REM copy %PROJECT_ROOT%\.conan\release_ipt %USERPROFILE%\.conan\release_ocv
 
 CALL conan profile detect --force
 
-CALL conan install %PROJECT_ROOT%\.conan --output-folder=%PROJECT_ROOT%\%BUILD_DIR% --build=missing --profile=%PROJECT_ROOT%\.conan\debug_ocv
+CALL conan install %PROJECT_ROOT%\.conan --output-folder=%PROJECT_ROOT% --build=missing --profile=%PROJECT_ROOT%\.conan\debug_ocv
 
-CALL conan install %PROJECT_ROOT%\.conan --output-folder=%PROJECT_ROOT%\%BUILD_DIR% --build=missing --profile=%PROJECT_ROOT%\.conan\release_ocv
+CALL conan install %PROJECT_ROOT%\.conan --output-folder=%PROJECT_ROOT% --build=missing --profile=%PROJECT_ROOT%\.conan\release_ocv
 
-CALL %PROJECT_ROOT%\%BUILD_DIR%\conanbuild.bat
+CALL %PROJECT_ROOT%\%BUILD_DIR%\generators\conanbuild.bat
 
-CALL %PROJECT_ROOT%\%BUILD_DIR%\conanrun.bat
+CALL %PROJECT_ROOT%\%BUILD_DIR%\generators\conanrun.bat
 
 REM CALL cmake -S . -B %PROJECT_ROOT%\%BUILD_DIR% -G %VS_VERSION% %CMAKE_FLAGS% -D CMAKE_TOOLCHAIN_FILE=%PROJECT_ROOT%\%BUILD_DIR%\conan_toolchain.cmake 
-CALL cmake -S . -B %PROJECT_ROOT%\%BUILD_DIR% -G %VS_VERSION% -D BUILD_TESTING=OM -D CMAKE_TOOLCHAIN_FILE=%PROJECT_ROOT%\%BUILD_DIR%\conan_toolchain.cmake 
+CALL cmake -S . -B %PROJECT_ROOT%\%BUILD_DIR% -G %VS_VERSION% -D BUILD_TESTING=OM -D CMAKE_TOOLCHAIN_FILE=%PROJECT_ROOT%\%BUILD_DIR%\generators\conan_toolchain.cmake 
 
 
 REM CALL cmake -S . -B %PROJECT_ROOT%\%BUILD_DIR% --preset conan-default

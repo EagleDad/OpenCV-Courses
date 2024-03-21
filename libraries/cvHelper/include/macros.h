@@ -19,6 +19,8 @@
                                     __pragma( warning( disable : 4061 ) )      \
                                         __pragma( warning( disable : 5267 ) )  \
                                             __pragma(                          \
-                                                warning( disable : 4127 ) )
+                                                warning( disable : 4127 ) )    \
+                                                __pragma( warning(             \
+                                                    disable : 4435 ) )
 
 #define IGNORE_WARNINGS_POP __pragma( warning( pop ) )

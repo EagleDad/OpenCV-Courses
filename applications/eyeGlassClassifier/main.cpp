@@ -154,10 +154,11 @@ cv::Mat getCroppedEyeRegion( cv::Mat targetImage )
         IMAGES_ROOT + "/models/haarcascade_frontalface_default.xml";
 
     cv::CascadeClassifier faceCascade;
+
     if ( ! faceCascade.load( faceCascadePath ) )
     {
         printf( "--(!)Error loading face cascade\n" );
-    };
+    }
 
     cv::Mat targetImageGray;
 
