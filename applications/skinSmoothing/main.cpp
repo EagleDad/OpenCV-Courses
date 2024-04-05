@@ -10,19 +10,6 @@ IGNORE_WARNINGS_POP
 // STD includes
 #include <fstream>
 
-/*
-const std::string caffeConfigFile = MODEL_PATH + "deploy.prototxt";
-const std::string caffeWeightFile = MODEL_PATH +
-"res10_300x300_ssd_iter_140000_fp16.caffemodel";
-
-const std::string tensorflowConfigFile = MODEL_PATH +
-"opencv_face_detector.pbtxt"; const std::string tensorflowWeightFile =
-MODEL_PATH + "opencv_face_detector_uint8.pb";
-
-string filename = DATA_PATH + "images/panda.jpg";
-
- */
-
 //
 // Global variables
 //
@@ -330,7 +317,6 @@ void skinSmoothing( )
         cv::Mat overlayRoi = overlayImage( loc );
 
         cv::addWeighted( overlayRoi, 0.75, maskOverlay, 0.5, 0, overlayRoi );
-
 
         //
         // Get the current roi
