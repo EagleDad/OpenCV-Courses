@@ -291,7 +291,7 @@ void skinSmoothing()
     cv::parallel_for_(cv::Range(0, static_cast<int>(faceLocations.size())), [&](const cv::Range& range) {
         for (int i = range.start; i < range.end; ++i)
         {
-            const auto& loc = faceLocations[i];
+            const auto& loc = faceLocations[ static_cast< size_t >( ( i ) ) ];
 
             //
             // Show face locations
