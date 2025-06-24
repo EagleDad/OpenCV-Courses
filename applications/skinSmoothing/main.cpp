@@ -280,96 +280,94 @@ void updateView( const cv::Mat& result )
     cv::imshow( windowName, combinedImage );
 }
 
-void skinSmoothing( )
+void skinSmoothing()
 {
-    reset( );
+    reset();
 
-    //
     // Detect face locations
-    //
-    const auto faceLocations = detectFaces( sourceImage );
+    const auto faceLocations = detectFaces(sourceImage);
 
-    //
-    // Perform skin detection
-    //
+    // Apply skin smoothing in parallel
+    cv::parallel_for_(cv::Range(0, static_cast<int>(faceLocations.size())), [&](const cv::Range& range) {
+        for (int i = range.start; i < range.end; ++i)
+        {
+            const auto& loc = faceLocations[i];
 
-    for ( const auto& loc : faceLocations )
-    {
-        //
-        // Show face locations
-        //
-        cv::rectangle( overlayImage,
-                       loc,
-                       cv::Scalar( 0, 255, 0 ),
-                       sourceImage.rows / 150,
-                       8 );
+            //
+            // Show face locations
+            //
+            cv::rectangle(overlayImage,
+                          loc,
+                          cv::Scalar(0, 255, 0),
+                          sourceImage.rows / 150,
+                          8);
 
-        // Get the mask for the skin
-        auto mask = calculateMask( loc );
+            // Get the mask for the skin
+            auto mask = calculateMask(loc);
 
-        //
-        // Show mask as overlay
-        //
-        cv::Mat maskOverlay;
-        cv::Mat empty =
-            cv::Mat( mask.rows, mask.cols, CV_8UC1, cv::Scalar( 0 ) );
-        cv::merge( std::vector< cv::Mat > { mask, empty, empty }, maskOverlay );
-        cv::Mat overlayRoi = overlayImage( loc );
+            //
+            // Show mask as overlay
+            //
+            cv::Mat maskOverlay;
+            cv::Mat empty =
+                cv::Mat(mask.rows, mask.cols, CV_8UC1, cv::Scalar(0));
+            cv::merge(std::vector<cv::Mat>{mask, empty, empty}, maskOverlay);
+            cv::Mat overlayRoi = overlayImage(loc);
 
-        cv::addWeighted( overlayRoi, 0.75, maskOverlay, 0.5, 0, overlayRoi );
+            cv::addWeighted(overlayRoi, 0.75, maskOverlay, 0.5, 0, overlayRoi);
 
-        //
-        // Get the current roi
-        //
-        cv::Mat roi = sourceImage( loc ).clone( );
+            //
+            // Get the current ROI
+            //
+            cv::Mat roi = sourceImage(loc).clone();
 
-        // Scale the mask values to 0..1
-        mask.convertTo( mask, CV_32F, 1 / 255.0f );
+            // Scale the mask values to 0..1
+            mask.convertTo(mask, CV_32F, 1 / 255.0f);
 
-        // Convert the image to float values in range 0..1
-        cv::Mat roiF;
-        roi.convertTo( roiF, CV_32F, 1.0 / 255.0f );
+            // Convert the image to float values in range 0..1
+            cv::Mat roiF;
+            roi.convertTo(roiF, CV_32F, 1.0 / 255.0f);
 
-        // Smooth the mask
-        cv::GaussianBlur( mask, mask, cv::Size( 7, 7 ), 0, 0 );
+            // Smooth the mask
+            cv::GaussianBlur(mask, mask, cv::Size(7, 7), 0, 0);
 
-        //
-        // Perform filtering
-        //
+            //
+            // Perform filtering
+            //
 
-        // Blur the image using the edge-preserving filter
-        cv::Mat imageBlurred;
-        // cv::bilateralFilter( roiF, imageBlurred, 2 * 3, 30, 30 );
-        cv::GaussianBlur( roiF,
-                          imageBlurred,
-                          cv::Size( blurRadius * 2 + 1, blurRadius * 2 + 1 ),
-                          0 );
+            // Blur the image using the edge-preserving filter
+            cv::Mat imageBlurred;
+            cv::GaussianBlur(roiF,
+                             imageBlurred,
+                             cv::Size(blurRadius * 2 + 1, blurRadius * 2 + 1),
+                             0);
 
-        // Combine the blurred and the original part of the image, making a
-        // seamless transition between these regions
+            // Combine the blurred and the original part of the image, making a
+            // seamless transition between these regions
 
-        // 1) The blurred part
-        cv::Mat mask3F;
-        cv::merge( std::vector< cv::Mat > { mask, mask, mask }, mask3F );
-        cv::multiply( imageBlurred, mask3F, imageBlurred );
+            // 1) The blurred part
+            cv::Mat mask3F;
+            cv::merge(std::vector<cv::Mat>{mask, mask, mask}, mask3F);
+            cv::multiply(imageBlurred, mask3F, imageBlurred);
 
-        // 2) The original part
-        mask3F.convertTo( mask3F, -1, -1, 1 ); // invert the mask
-        cv::multiply( roiF, mask3F, roiF );
+            // 2) The original part
+            mask3F.convertTo(mask3F, -1, -1, 1); // invert the mask
+            cv::multiply(roiF, mask3F, roiF);
 
-        // 3) Combined image
-        imageBlurred += roiF;
+            // 3) Combined image
+            imageBlurred += roiF;
 
-        imageBlurred.convertTo( imageBlurred, CV_8U, 255.0f );
+            imageBlurred.convertTo(imageBlurred, CV_8U, 255.0f);
 
-        imageBlurred.copyTo( roi );
+            imageBlurred.copyTo(roi);
 
-        // Get the result roi
-        cv::Mat dstRoi = resultImage( loc );
-        imageBlurred.copyTo( dstRoi );
-    }
+            // Get the result ROI
+            cv::Mat dstRoi = resultImage(loc);
+            imageBlurred.copyTo(dstRoi);
+        }
+    });
 
-    updateView( resultImage );
+    updateView(resultImage);
 }
 
 void reset( )
